@@ -84,19 +84,23 @@ class TodoList extends Component {
         }, {}, ['input', this.onAddInputChange.bind(this)]),
         createElement("button", { id: "add-btn" }, "+", ['click', this.onAddTask.bind(this)])
       ]),
-      createElement("ul", { id: "todos" }, this.state.tasks.map(task => (
-          createElement("li", { key: task.id }, [
-            createElement("input", {
-              type: "checkbox",
-            }),
-            createElement("label", {}, task.text),
-            createElement("button", {}, "🗑", ['click', () => {
-              const index = this.state.tasks.findIndex(t => t.id === task.id);
-              this.state.tasks.splice(index, 1);
-              this.update();
-            }])
-          ])
-      )))
+      createElement("ul", { id: "todos" }, this.state.tasks.map(task => {
+        const attr = {
+          type: "checkbox",
+        }
+        if (task.completed)
+          attr.checked = '';
+        return createElement("li", { key: task.id }, [
+          createElement("input", attr),
+          createElement("label", {}, task.text),
+          createElement("button", {}, "🗑", ['click', () => {
+            const index = this.state.tasks.findIndex(t => t.id === task.id);
+            this.state.tasks.splice(index, 1);
+            this.update();
+          }])
+        ])
+      }
+      ))
     ]);
   }
 }
