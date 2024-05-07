@@ -110,19 +110,33 @@ class TodoList extends Component {
       ],
       inputState: "",
     };
+    this.loadState();
+  }
+
+  loadState() {
+    const savedState = localStorage.getItem('todoListState');
+    if (savedState) {
+      this.state = JSON.parse(savedState);
+    }
+  }
+
+  saveState() {
+    localStorage.setItem('todoListState', JSON.stringify(this.state));
   }
 
   onAddTask(text) {
     this.state.tasks.push({
       id: this.state.tasks.length + 1,
       text: text,
-      completed: false,
+      completed: false
     });
+    this.saveState();
     this.update();
   }
 
   toggleTask(index) {
     this.state.tasks[index].completed = !this.state.tasks[index].completed;
+    this.saveState();
     this.update();
   }
 
@@ -133,6 +147,7 @@ class TodoList extends Component {
     } else {
       this.state.tasks.at(index).willBeDeleted = true;
     }
+    this.saveState();
     this.update();
   }
 
@@ -151,4 +166,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(new TodoList().getDomNode());
 });
 
-
+window.localStorage
