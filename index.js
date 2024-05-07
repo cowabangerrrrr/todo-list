@@ -70,7 +70,6 @@ class TodoList extends Component {
   }
 
   onAddInputChange() {
-    debugger
     this.state.inputState = document.getElementById('new-todo').value;
   }
 
@@ -89,7 +88,6 @@ class TodoList extends Component {
           createElement("li", { key: task.id }, [
             createElement("input", {
               type: "checkbox",
-              checked: task.completed
             }),
             createElement("label", {}, task.text),
             createElement("button", {}, "🗑", ['click', () => {
